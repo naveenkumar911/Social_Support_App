@@ -1,4 +1,4 @@
-# Solution Summary — CloudJune Social Support AI Prototype
+# Solution Summary — Social Support AI Application
 
 ## 1. Executive Summary
 This prototype automates the evaluation of social support applications using a modular AI workflow. It ingests multimodal documents, extracts and validates applicant information, computes eligibility via a local ML model, stores semantic artifacts in a vector store, and provides LLM-based recommendations. The system is privacy-first (local model hosting), modular, and designed for deployment in government environments requiring data protection and auditability.
@@ -7,39 +7,8 @@ This prototype automates the evaluation of social support applications using a m
 
 ## 2. High-Level Architecture
 
-```mermaid
-flowchart LR
-  subgraph Applicant
-    A[Applicant Portal / Chatbot (Streamlit)]
-    A -->|Uploads files + fills form| B[API Gateway (FastAPI)]
-  end
+High level architectuire can bne fiound in the diagram section of this repo.
 
-  subgraph Backend
-    B --> C[Ingest Module (OCR / Parser)]
-    C --> D[Validation Module]
-    D --> E[Feature Store / Postgres]
-    C --> V[Embedding Service] --> Q[Vector Store (Qdrant mock)]
-    D --> M[Eligibility ML (scikit-learn)]
-    M --> R[Recommendation Agent (Local LLM via Ollama/OpenWebUI)]
-    B --> O[Orchestrator Agent (Agentic controller)]
-    O --> M
-    O --> R
-    O --> Q
-  end
-
-  subgraph Observability
-    M --> Langfuse[Langfuse]
-    R --> Langfuse
-  end
-
-  subgraph FrontendAdmin
-    Admin[Reviewer Dashboard (Streamlit)]
-    Admin --> B
-  end
-```
-*(Use the Mermaid diagram above in README or slide deck; a PNG is included as placeholder.)*
-
----
 
 ## 3. Component Design & Responsibilities
 
@@ -170,6 +139,3 @@ flowchart LR
 - `README.md` with run instructions
 
 ---
-
-## 10. Closing Notes
-This prototype focuses on delivering the **core functionality** asked in the brief: multimodal ingestion, local ML + LLM usage, agent orchestration, and end-to-end demoability. The architecture supports replacing mock components with production-grade systems (Qdrant, Neo4j, Ollama) without structural changes.
